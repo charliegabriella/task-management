@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuidv4 } from 'uuid'; //creates id's for us
+import { CreateTaskDTO } from './dto/create-task.dto';
 
 @Injectable()
 export class TasksService {
@@ -10,7 +11,8 @@ export class TasksService {
     return this.tasks;
   }
 
-  createTask(title: string, description: string): Task {
+  createTask(createTaskDTO: CreateTaskDTO): Task {
+    const { title, description } = createTaskDTO;
     const task: Task = {
       id: uuidv4(),
       title,
@@ -19,6 +21,6 @@ export class TasksService {
     };
 
     this.tasks.push(task);
-    return task;
+    return task; //it's good practice to return the newly created resourse when you create resources in a rest API.
   }
 }
